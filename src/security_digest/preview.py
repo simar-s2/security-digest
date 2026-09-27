@@ -39,6 +39,8 @@ def mrkdwn_to_terminal(text, color=True):
 
 
 def render(blocks, color=True, width=100):
+    """Blocks as terminal text. Emoji variation selectors are dropped because
+    terminals disagree about their width and overlap the next character."""
     out = []
     for block in blocks:
         kind = block["type"]
@@ -52,7 +54,7 @@ def render(blocks, color=True, width=100):
         elif kind == "context":
             text = " ".join(mrkdwn_to_terminal(e["text"], False) for e in block["elements"])
             out.append(f"{DIM}{text}{RESET}" if color else text)
-    return "\n".join(out)
+    return "\n".join(out).replace("\ufe0f", "")
 
 
 def main(argv=None):

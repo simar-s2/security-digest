@@ -9,7 +9,7 @@ from .conftest import FIXTURE
 def test_preview_renders_the_fixture(capsys):
     preview.main([str(FIXTURE)])
     out = capsys.readouterr().out
-    assert out.startswith("🛡️ AWS security daily digest")
+    assert out.startswith("🛡 AWS security daily digest")
     assert "shared-services" in out  # name filled in from Organizations
     assert "\033[" not in out  # no colors when not a terminal
 
