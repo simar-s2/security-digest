@@ -1,0 +1,17 @@
+[project]
+name = "security-digest"
+version = "0.1.0"
+description = "Daily AWS Security Hub digest and real-time alerts for Slack"
+requires-python = ">=3.12"
+license = "MIT"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
