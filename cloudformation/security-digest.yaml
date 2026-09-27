@@ -1,0 +1,232 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  security-digest: daily Security Hub digest (and optional real-time alerts) for
+  Slack. Deploy in the Security Hub delegated administrator account, in the home
+  region. scripts/deploy.sh builds and uploads the code and fills CodeBucket and
+  CodeKey.
+
+Parameters:
+  NamePrefix:
+    Type: String
+    Default: sec
+  CodeBucket:
+    Type: String
+  CodeKey:
+    Type: String
+  WebhookParameterName:
+    Type: String
+    AllowedPattern: '/.+'
+    Description: SSM SecureString parameter holding the Slack incoming webhook URL, e.g. /security-digest/slack-webhook.
+  WebhookKmsKeyArn:
+    Type: String
+    Default: ''
+    Description: Customer managed key of the parameter. Empty for the default aws/ssm key.
+  ScheduleExpression:
+    Type: String
+    Default: cron(0 14 ? * MON-FRI *)
+  ScheduleTimezone:
+    Type: String
+    Default: UTC
+  Title:
+    Type: String
+    Default: AWS security daily digest
+  Severities:
+    Type: String
+    Default: CRITICAL,HIGH
+  ExcludedProducts:
+    Type: String
+    Default: Inspector,Systems Manager Patch Manager
+  MaxRows:
+    Type: Number
+    Default: 15
+  IncludeNewCves:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+  IncludePatchStatus:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+  Footer:
+    Type: String
+    Default: ''
+  RealtimeAlerts:
+    Type: String
+    Default: 'false'
+    AllowedValues: ['true', 'false']
+  RealtimeSeverities:
+    Type: CommaDelimitedList
+    Default: CRITICAL
+  LogRetentionDays:
+    Type: Number
+    Default: 90
+    AllowedValues: [30, 60, 90, 180, 365]
+
+Conditions:
+  Realtime: !Equals [!Ref RealtimeAlerts, 'true']
+  WebhookCmk: !Not [!Equals [!Ref WebhookKmsKeyArn, '']]
+
+Resources:
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_158
+            comment: Only run summaries; the findings stay in Security Hub. Default service encryption is enough.
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${NamePrefix}-security-digest'
+      RetentionInDays: !Ref LogRetentionDays
+
+  FunctionRole:
+    Type: AWS::IAM::Role
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_111
+            comment: GetFindings and ListAccounts do not support resource-level permissions.
+    Properties:
+      RoleName: !Sub '${NamePrefix}-security-digest'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: lambda.amazonaws.com }
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: read-findings-post-slack
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: ReadFindings
+                Effect: Allow
+                Action: [securityhub:GetFindings, organizations:ListAccounts]
+                Resource: '*'
+              - Sid: ReadWebhook
+                Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter${WebhookParameterName}'
+              - !If
+                - WebhookCmk
+                - Sid: DecryptWebhook
+                  Effect: Allow
+                  Action: kms:Decrypt
+                  Resource: !Ref WebhookKmsKeyArn
+                - !Ref AWS::NoValue
+              - Sid: Logs
+                Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub '${LogGroup.Arn}:*'
+
+  Function:
+    Type: AWS::Lambda::Function
+    Metadata:
+      checkov:
+        skip:
+          - id: CKV_AWS_115
+            comment: Reserved concurrency fails in new accounts whose concurrency quota is still at the minimum.
+          - id: CKV_AWS_116
+            comment: Failures raise, show in the Errors metric and log Slack's reason; alarm on Errors if you need paging.
+          - id: CKV_AWS_117
+            comment: Calls only AWS APIs and Slack; a VPC would need a NAT gateway for no benefit.
+          - id: CKV_AWS_173
+            comment: The environment holds settings only; the webhook URL stays in SSM.
+    Properties:
+      FunctionName: !Sub '${NamePrefix}-security-digest'
+      Description: Daily Security Hub digest and real-time alerts for Slack
+      Role: !GetAtt FunctionRole.Arn
+      Runtime: python3.13
+      Architectures: [arm64]
+      Handler: security_digest.handler.handler
+      Timeout: 120
+      MemorySize: 256
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+      LoggingConfig:
+        LogFormat: Text
+        LogGroup: !Ref LogGroup
+      Environment:
+        Variables:
+          WEBHOOK_PARAM: !Ref WebhookParameterName
+          DIGEST_TITLE: !Ref Title
+          SEVERITIES: !Ref Severities
+          EXCLUDED_PRODUCTS: !Ref ExcludedProducts
+          MAX_ROWS: !Ref MaxRows
+          INCLUDE_NEW_CVES: !Ref IncludeNewCves
+          INCLUDE_PATCH_STATUS: !Ref IncludePatchStatus
+          CONSOLE_REGION: !Ref 'AWS::Region'
+          FOOTER: !Ref Footer
+
+  SchedulerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${NamePrefix}-security-digest-scheduler'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: { Service: scheduler.amazonaws.com }
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals: { 'aws:SourceAccount': !Ref 'AWS::AccountId' }
+      Policies:
+        - PolicyName: invoke-digest
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: lambda:InvokeFunction
+                Resource: !GetAtt Function.Arn
+
+  Schedule:
+    Type: AWS::Scheduler::Schedule
+    Properties:
+      Name: !Sub '${NamePrefix}-security-digest'
+      Description: Sends the Security Hub digest to Slack
+      ScheduleExpression: !Ref ScheduleExpression
+      ScheduleExpressionTimezone: !Ref ScheduleTimezone
+      FlexibleTimeWindow:
+        Mode: 'OFF'
+      Target:
+        Arn: !GetAtt Function.Arn
+        RoleArn: !GetAtt SchedulerRole.Arn
+        Input: '{"source": "schedule"}'
+        RetryPolicy:
+          MaximumRetryAttempts: 2
+
+  # Left out of real-time alerts: Inspector and Patch Manager (one finding per
+  # image or instance; the digest rolls them up) and control SSM.2, the same
+  # patch signal as a Security Hub control finding, matched by title prefix.
+  RealtimeRule:
+    Type: AWS::Events::Rule
+    Condition: Realtime
+    Properties:
+      Name: !Sub '${NamePrefix}-security-digest-realtime'
+      Description: New Security Hub findings at the real-time severities
+      EventPattern:
+        source: [aws.securityhub]
+        detail-type: [Security Hub Findings - Imported]
+        detail:
+          findings:
+            Severity: { Label: !Ref RealtimeSeverities }
+            Workflow: { Status: [NEW] }
+            RecordState: [ACTIVE]
+            ProductName: [{ anything-but: [Inspector, Systems Manager Patch Manager] }]
+            Title: [{ anything-but: { prefix: 'SSM.2 ' } }]
+      Targets:
+        - Id: digest
+          Arn: !GetAtt Function.Arn
+
+  RealtimePermission:
+    Type: AWS::Lambda::Permission
+    Condition: Realtime
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref Function
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt RealtimeRule.Arn
+
+Outputs:
+  FunctionName:
+    Value: !Ref Function
