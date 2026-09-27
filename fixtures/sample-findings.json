@@ -1,0 +1,536 @@
+{
+  "accounts": {
+    "111122223333": "prod",
+    "444455556666": "staging",
+    "777788889999": "data-platform",
+    "222233334444": "shared-services"
+  },
+  "findings": [
+    {
+      "AwsAccountId": "222233334444",
+      "Region": "us-east-1",
+      "Title": "IAM.6 Hardware MFA should be enabled for the root user",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "AWS::::Account:222233334444",
+          "Region": "us-east-1"
+        }
+      ],
+      "Compliance": {
+        "SecurityControlId": "IAM.6",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "444455556666",
+      "Region": "us-east-1",
+      "Title": "EC2.19 Security groups should not allow unrestricted access to ports with high risk",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:444455556666:security-group/sg-0a1b2c3d4e5f60001",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "staging",
+      "Compliance": {
+        "SecurityControlId": "EC2.19",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "444455556666",
+      "Region": "us-east-1",
+      "Title": "EC2.19 Security groups should not allow unrestricted access to ports with high risk",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:444455556666:security-group/sg-0a1b2c3d4e5f60002",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "staging",
+      "Compliance": {
+        "SecurityControlId": "EC2.19",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "S3.2 S3 general purpose buckets should block public read access",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:s3:::example-public-assets",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "S3.2",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "EC2.8 EC2 instances should use Instance Metadata Service Version 2 (IMDSv2)",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f650H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "EC2.8",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "EC2.8 EC2 instances should use Instance Metadata Service Version 2 (IMDSv2)",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f650H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "EC2.8",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "EC2.8 EC2 instances should use Instance Metadata Service Version 2 (IMDSv2)",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f650H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "EC2.8",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "444455556666",
+      "Region": "us-east-1",
+      "Title": "EC2.8 EC2 instances should use Instance Metadata Service Version 2 (IMDSv2)",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:444455556666:instance/i-0a1b2c3d4e5f650H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "staging",
+      "Compliance": {
+        "SecurityControlId": "EC2.8",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "SSM.2 Amazon EC2 instances managed by Systems Manager should have a patch compliance status of COMPLIANT after a patch installation",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f610H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "SSM.2",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "SSM.2 Amazon EC2 instances managed by Systems Manager should have a patch compliance status of COMPLIANT after a patch installation",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f610H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "SSM.2",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "777788889999",
+      "Region": "us-east-1",
+      "Title": "SSM.2 Amazon EC2 instances managed by Systems Manager should have a patch compliance status of COMPLIANT after a patch installation",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:777788889999:instance/i-0a1b2c3d4e5f610H",
+          "Region": "us-east-1"
+        }
+      ],
+      "Compliance": {
+        "SecurityControlId": "SSM.2",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "198.51.100.7 is performing SSH brute force attacks against i-0a1b2c3d4e5f60042.",
+      "ProductName": "GuardDuty",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f60042",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod"
+    },
+    {
+      "AwsAccountId": "777788889999",
+      "Region": "us-east-1",
+      "Title": "CloudTrail.2 CloudTrail should have encryption at-rest enabled",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "MEDIUM"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:777788889999:instance/i-0a1b2c3d4e5f620M",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "data-platform",
+      "Compliance": {
+        "SecurityControlId": "CloudTrail.2",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "777788889999",
+      "Region": "us-east-1",
+      "Title": "SSM.3 Amazon EC2 instances managed by Systems Manager should have an association compliance status of COMPLIANT",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "LOW"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:777788889999:instance/i-0a1b2c3d4e5f610L",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "data-platform",
+      "Compliance": {
+        "SecurityControlId": "SSM.3",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "Instance i-0a1b2c3d4e5f60007 is missing 4 approved patches",
+      "ProductName": "Systems Manager Patch Manager",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f680H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod"
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "EC2.18 Security groups should only allow unrestricted incoming traffic for authorized ports",
+      "ProductName": "Security Hub",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "RESOLVED"
+      },
+      "FirstObservedAt": "now-2d",
+      "CreatedAt": "now-2d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ec2:us-east-1:111122223333:instance/i-0a1b2c3d4e5f610H",
+          "Region": "us-east-1"
+        }
+      ],
+      "AwsAccountName": "prod",
+      "Compliance": {
+        "SecurityControlId": "EC2.18",
+        "Status": "FAILED"
+      }
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "CVE-2024-6387 - openssh",
+      "ProductName": "Inspector",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-5h",
+      "CreatedAt": "now-5h",
+      "Resources": [
+        {
+          "Id": "arn:aws:ecr:us-east-1:111122223333:repository/api/sha256:0a1b",
+          "Region": "us-east-1",
+          "Details": {
+            "AwsEcrContainerImage": {
+              "RepositoryName": "api",
+              "ImageTags": [
+                "1.42.0"
+              ]
+            }
+          }
+        }
+      ],
+      "AwsAccountName": "prod"
+    },
+    {
+      "AwsAccountId": "444455556666",
+      "Region": "us-east-1",
+      "Title": "CVE-2024-6387 - openssh",
+      "ProductName": "Inspector",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-3h",
+      "CreatedAt": "now-3h",
+      "Resources": [
+        {
+          "Id": "arn:aws:ecr:us-east-1:444455556666:repository/api/sha256:0a1b",
+          "Region": "us-east-1",
+          "Details": {
+            "AwsEcrContainerImage": {
+              "RepositoryName": "api",
+              "ImageTags": [
+                "1.43.0-rc1"
+              ]
+            }
+          }
+        }
+      ],
+      "AwsAccountName": "staging"
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "CVE-2023-44487 - nghttp2",
+      "ProductName": "Inspector",
+      "Severity": {
+        "Label": "HIGH"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-7h",
+      "CreatedAt": "now-7h",
+      "Resources": [
+        {
+          "Id": "arn:aws:ecr:us-east-1:111122223333:repository/worker/sha256:0a1b",
+          "Region": "us-east-1",
+          "Details": {
+            "AwsEcrContainerImage": {
+              "RepositoryName": "worker",
+              "ImageTags": [
+                "3.1.2"
+              ]
+            }
+          }
+        }
+      ],
+      "AwsAccountName": "prod"
+    },
+    {
+      "AwsAccountId": "111122223333",
+      "Region": "us-east-1",
+      "Title": "CVE-2024-3094 - xz",
+      "ProductName": "Inspector",
+      "Severity": {
+        "Label": "CRITICAL"
+      },
+      "RecordState": "ACTIVE",
+      "Workflow": {
+        "Status": "NEW"
+      },
+      "FirstObservedAt": "now-10d",
+      "CreatedAt": "now-10d",
+      "Resources": [
+        {
+          "Id": "arn:aws:ecr:us-east-1:111122223333:repository/legacy-batch/sha256:0a1b",
+          "Region": "us-east-1",
+          "Details": {
+            "AwsEcrContainerImage": {
+              "RepositoryName": "legacy-batch",
+              "ImageTags": [
+                "0.9"
+              ]
+            }
+          }
+        }
+      ],
+      "AwsAccountName": "prod"
+    }
+  ]
+}
