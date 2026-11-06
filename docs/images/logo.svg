@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232a3b"/>
+      <stop offset="1" stop-color="#0b0e14"/>
+    </linearGradient>
+    <linearGradient id="accent" gradientUnits="userSpaceOnUse" x1="40" y1="40" x2="216" y2="216">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <path id="shape" d="M62 40 H194 A24 24 0 0 1 218 64 V152 A24 24 0 0 1 194 176 H124 L76 216 V176 H62 A24 24 0 0 1 38 152 V64 A24 24 0 0 1 62 40 Z"/>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#tile)"/>
+  <use href="#shape" fill="url(#accent)" filter="url(#glow)" opacity="0.55"/>
+  <use href="#shape" fill="url(#accent)"/>
+  <g stroke="#f8fafc" stroke-width="13" stroke-linecap="round" fill="none">
+    <path d="M70 78 H186"/>
+    <path d="M70 108 H186"/>
+    <path d="M70 138 H138"/>
+  </g>
+</svg>
